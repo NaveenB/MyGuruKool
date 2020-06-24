@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Component } from "react";
 import SplitPane from "react-split-pane";
-import Student from "./Student";
+// import Student from "./microsoft/Student";
+import Classwork from "./Classwork";
 import Communication from "./Communication";
 import Header from "./Header";
 // import CustomScroll from "react-custom-scroll";
 // import "../scss/customScroll.css";
 import { Scrollbars } from "react-custom-scrollbars";
+import * as _constants from "./util/constants";
 
 const Wrapper = styled.div`
   .Resizer {
@@ -65,6 +67,15 @@ class Home extends Component {
       showCommPane: false,
       splitPercentage: "100%",
     });
+    if (
+      sessionStorage.getItem(_constants.LOGIN_PROVIDER) === _constants.GOOGLE
+    ) {
+      let tempProfile = {
+        displayName: this.props.location,
+        department: sessionStorage.getItem("google_profile"),
+      };
+      this.setState({ studentData: tempProfile });
+    }
   }
 
   handleStudentData = (studentData) => {
@@ -114,7 +125,7 @@ class Home extends Component {
                   <b>
                     {this.state.studentData
                       ? `Group: ${this.state.studentData.department}`
-                      : ""}
+                      : "Group Name"}
                   </b>
                 </span>
                 <ul className="float-right">
@@ -149,7 +160,8 @@ class Home extends Component {
           onChange={(size) => this.toggleBtmHeight(size)}
         >
           <Scrollbars>
-            <Student studentData={this.handleStudentData} />
+            <Classwork studentData={this.handleStudentData} />
+            {/* <Student studentData={this.handleStudentData} /> */}
           </Scrollbars>
           {/* <CustomScroll allowOuterScroll={true} flex="1">
             <Student studentData={this.handleStudentData} />

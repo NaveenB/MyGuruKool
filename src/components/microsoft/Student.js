@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
-import "..//App.css";
+import "../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import FileUpload from "./FileUpload";
+import FileUpload from "../FileUpload";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { css } from "@emotion/core";
@@ -14,9 +14,10 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 // import AudioVideo from "./AudioVideo";
-import Video from "./Video";
-import * as _util from "./util/utils";
-import * as _apiUtils from "./util/AxiosUtil";
+import Video from "../Video";
+import * as _util from "../util/utils";
+import * as _apiUtils from "../util/AxiosUtil";
+import * as _constants from "../util/constants";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 // Demo styles, see 'Styles' section below for some notes on use.
@@ -120,11 +121,13 @@ export default class Student extends Component {
     this.setState({ expand: false, openedItems: [] });
     this.setState({ currentView: event.target.text });
     this.setState({ isLoading: true });
+    // _apiUtils
+    //   .loadAssignments(student.group.id, event.target.id)
     _apiUtils
       .loadAssignments(this.state.groupDetails.id, event.target.id)
       .then((response) => {
         this.setState({ isLoading: false });
-        this.setState({ exercise: response.data });
+        this.setState({ exercise: response.data }); //***VISIT HERE
         /*Sort by due date */
         {
           let sortedExercises =

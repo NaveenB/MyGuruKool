@@ -30,7 +30,9 @@ export default class Session extends Component {
       this.setState((state) => ({
         isSignedIn: true,
         accessToken: response.accessToken,
+        googleProfileName: response.profileObj.name,
       }));
+      sessionStorage.setItem("google_profile", response.profileObj.name);
       sessionStorage.setItem(_constants.ACCESS_TOKEN, response.accessToken);
       sessionStorage.setItem(_constants.LOGIN_PROVIDER, _constants.GOOGLE);
     }
@@ -43,7 +45,14 @@ export default class Session extends Component {
   render() {
     if (this.state.isSignedIn) {
       // redirect to home if signed up
-      return <Redirect to={{ pathname: "/home" }} />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/home",
+            state: { name: this.state.googleProfileName },
+          }}
+        />
+      );
     }
     return (
       <Fragment>
@@ -106,6 +115,7 @@ export default class Session extends Component {
                   onFailure={this.googleHandleLoginFailure}
                   cookiePolicy={"single_host_origin"}
                   responseType={_constants.ACCESS_TOKEN} //code,
+                  scope={process.env.REACT_APP_GOOGLE_OAUTH_SCOPES}
                 />
               </div>
             </div>
