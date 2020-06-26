@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Student from "./microsoft/Student";
+import GoogleStudent from "./google/Student";
 import axios from "axios";
 import * as _constants from "./util/constants";
 
@@ -44,8 +45,7 @@ export default class Classwork extends Component {
       _constants.MICROSOFT ? (
       <Student studentData={this.handleStudentDataFromProvider} />
     ) : (
-      "classwork view, Login provider: " +
-        sessionStorage.getItem(_constants.LOGIN_PROVIDER)
+      <GoogleStudent />
     );
   }
 }

@@ -235,7 +235,8 @@ export default class Student extends Component {
                                 <div className="float-left col-12 exercisetitle">
                                   {exe.title
                                     ? (this.state.exerciseTitle = exe.title)
-                                    : "No Exercise Data"}
+                                    : // ,alert(exe.title)
+                                      "No Exercise Data"}
                                   <small className="text-muted float-right">
                                     {exe.content && exe.content.submissionDate
                                       ? exe.content.submissionDate
